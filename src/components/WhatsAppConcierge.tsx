@@ -16,6 +16,8 @@ export function WhatsAppConcierge() {
   const [msg, setMsg] = useState("");
   const contact = useSetting<ContactSettings>("contact", defaultContact).data ?? defaultContact;
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const [pageUrl, setPageUrl] = useState("");
+  useEffect(() => { setPageUrl(window.location.href); }, [path]);
   const btn = useRef<HTMLButtonElement>(null);
   const ring = useRef<HTMLSpanElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -55,7 +57,7 @@ export function WhatsAppConcierge() {
   const send = (text: string) =>
     window.open(`${base}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
   const presets = path.startsWith("/flower/")
-    ? [`I have a question about this object: ${window.location.href}`, ...PRESETS]
+    ? [`I have a question about this object: ${pageUrl || path}`, ...PRESETS]
     : PRESETS;
 
   return (
