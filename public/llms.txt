@@ -1,0 +1,11 @@
+# ObjektHaus
+
+> ObjektHaus is a Bangladeshi design studio making handcrafted plywood objects, each named after a flower and shipped with a numbered botanical archive card. Prices in Bangladeshi Taka (BDT); delivery across Bangladesh.
+
+## Pages
+- [Exhibition](https://objekthausstudio.lovable.app/): the main exhibition of objects
+- [Botanical Archive](https://objekthausstudio.lovable.app/archive): every object and its flower
+- [Order](https://objekthausstudio.lovable.app/order): checkout
+- [Contact](https://objekthausstudio.lovable.app/contact): reach the studio
+- [Privacy](https://objekthausstudio.lovable.app/privacy)
+- [Terms](https://objekthausstudio.lovable.app/terms)
