@@ -4,9 +4,10 @@
 // Load inside handlers only — never import at module scope from client code.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+import type { createClient } from "@supabase/supabase-js";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LooseClient = any;
+type LooseClient = ReturnType<typeof createClient<any, any, any>>;
 
 export function getPersonalAdmin(): LooseClient {
-  return supabaseAdmin;
+  return supabaseAdmin as unknown as LooseClient;
 }
