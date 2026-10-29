@@ -14,7 +14,228 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      order_audit: {
+        Row: {
+          changed_at: string
+          field: string
+          id: number
+          new_value: string | null
+          old_value: string | null
+          order_id: string
+        }
+        Insert: {
+          changed_at?: string
+          field: string
+          id?: number
+          new_value?: string | null
+          old_value?: string | null
+          order_id: string
+        }
+        Update: {
+          changed_at?: string
+          field?: string
+          id?: number
+          new_value?: string | null
+          old_value?: string | null
+          order_id?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          address: string
+          courier: string | null
+          created_at: string
+          customer_name: string
+          delivery_zone: string
+          email: string | null
+          id: string
+          items: Json
+          note: string | null
+          payment_method: string | null
+          payment_sender: string | null
+          payment_trx_id: string | null
+          phone: string
+          reference: string
+          shipping: number
+          status: string
+          subtotal: number
+          total: number
+          total_weight: number
+          tracking_code: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address: string
+          courier?: string | null
+          created_at?: string
+          customer_name: string
+          delivery_zone?: string
+          email?: string | null
+          id?: string
+          items?: Json
+          note?: string | null
+          payment_method?: string | null
+          payment_sender?: string | null
+          payment_trx_id?: string | null
+          phone: string
+          reference?: string
+          shipping?: number
+          status?: string
+          subtotal?: number
+          total?: number
+          total_weight?: number
+          tracking_code?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string
+          courier?: string | null
+          created_at?: string
+          customer_name?: string
+          delivery_zone?: string
+          email?: string | null
+          id?: string
+          items?: Json
+          note?: string | null
+          payment_method?: string | null
+          payment_sender?: string | null
+          payment_trx_id?: string | null
+          phone?: string
+          reference?: string
+          shipping?: number
+          status?: string
+          subtotal?: number
+          total?: number
+          total_weight?: number
+          tracking_code?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          card_url: string
+          created_at: string
+          edition: string
+          id: string
+          images: Json
+          latin: string
+          name: string
+          no: string
+          note: string
+          price: number
+          product: string
+          published: boolean
+          represents: string
+          slug: string
+          sort_order: number
+          specs: Json
+          stock_out: boolean
+          stock_quantity: number
+          story: string
+          updated_at: string
+          weight_kg: number
+          why: string
+        }
+        Insert: {
+          card_url?: string
+          created_at?: string
+          edition?: string
+          id?: string
+          images?: Json
+          latin?: string
+          name: string
+          no?: string
+          note?: string
+          price?: number
+          product?: string
+          published?: boolean
+          represents?: string
+          slug: string
+          sort_order?: number
+          specs?: Json
+          stock_out?: boolean
+          stock_quantity?: number
+          story?: string
+          updated_at?: string
+          weight_kg?: number
+          why?: string
+        }
+        Update: {
+          card_url?: string
+          created_at?: string
+          edition?: string
+          id?: string
+          images?: Json
+          latin?: string
+          name?: string
+          no?: string
+          note?: string
+          price?: number
+          product?: string
+          published?: boolean
+          represents?: string
+          slug?: string
+          sort_order?: number
+          specs?: Json
+          stock_out?: boolean
+          stock_quantity?: number
+          story?: string
+          updated_at?: string
+          weight_kg?: number
+          why?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      staff: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          password_hash: string
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          password_hash: string
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          password_hash?: string
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
