@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavTone } from "./use-nav-tone";
 import { SocialLinks } from "./Social";
 import { useCart } from "@/lib/cart";
-import eyeMark from "@/assets/objekthaus-eye.png.asset.json";
+import eyeMark from "@/assets/objekthaus-logo.svg.asset.json";
 import { WordmarkGlyph } from "./WordmarkGlyph";
 import { useFaq } from "@/lib/motion";
 
