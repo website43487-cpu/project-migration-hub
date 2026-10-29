@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "735c8e75-d298-4988-a3f3-b3bff82a7d44",
+  "asset_id": "44d77030-622e-4ce1-a2e0-9c268383b8c1",
   "project_id": "8486af59-718c-41ad-adbf-5206320032be",
-  "url": "/__l5e/assets-v1/735c8e75-d298-4988-a3f3-b3bff82a7d44/halo-pendant.mp4",
-  "r2_key": "a/v1/8486af59-718c-41ad-adbf-5206320032be/735c8e75-d298-4988-a3f3-b3bff82a7d44/halo-pendant.mp4",
-  "original_filename": "halo-pendant.mp4",
-  "size": 4840707,
-  "content_type": "video/mp4",
-  "created_at": "2026-10-29T23:03:58Z"
+  "url": "/__l5e/assets-v1/44d77030-622e-4ce1-a2e0-9c268383b8c1/halo-pendant.webm",
+  "r2_key": "a/v1/8486af59-718c-41ad-adbf-5206320032be/44d77030-622e-4ce1-a2e0-9c268383b8c1/halo-pendant.webm",
+  "original_filename": "halo-pendant.webm",
+  "size": 3816232,
+  "content_type": "video/webm",
+  "created_at": "2026-10-29T23:04:46Z"
 }
