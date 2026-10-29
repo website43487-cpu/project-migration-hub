@@ -1,11 +1,11 @@
 {
-  "asset_id": "b8abb84d-556e-4757-a281-1895745d4834",
-  "content_type": "image/jpeg",
-  "created_at": "2026-09-18T12:05:40Z",
-  "original_filename": "halo-3.jpg",
-  "project_id": "61d49c36-be52-4cea-87df-6bae4fabcedb",
-  "r2_key": "a/v1/61d49c36-be52-4cea-87df-6bae4fabcedb/b8abb84d-556e-4757-a281-1895745d4834/halo-3.jpg",
-  "size": 74676,
-  "url": "/__l5e/assets-v1/b8abb84d-556e-4757-a281-1895745d4834/halo-3.jpg",
-  "version": 1
+  "version": 1,
+  "asset_id": "0ca856c8-57a6-499d-afed-d1348fb0677f",
+  "project_id": "8486af59-718c-41ad-adbf-5206320032be",
+  "url": "/__l5e/assets-v1/0ca856c8-57a6-499d-afed-d1348fb0677f/halo-3.png",
+  "r2_key": "a/v1/8486af59-718c-41ad-adbf-5206320032be/0ca856c8-57a6-499d-afed-d1348fb0677f/halo-3.png",
+  "original_filename": "halo-3.png",
+  "size": 2160424,
+  "content_type": "image/png",
+  "created_at": "2026-10-29T23:02:07Z"
 }
