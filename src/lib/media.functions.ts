@@ -9,6 +9,13 @@ const TEN_YEARS = 60 * 60 * 24 * 365 * 10;
 const MAX_BYTES = 45 * 1024 * 1024;
 const BUCKET = "media";
 
+// The media bucket is private (workspace policy), so links are long-lived signed URLs.
+async function signedLink(db: any, path: string) {
+  const { data, error } = await db.storage.from(BUCKET).createSignedUrl(path, TEN_YEARS);
+  if (error || !data?.signedUrl) throw new Error(error?.message ?? "Could not create a link for that file.");
+  return data.signedUrl as string;
+}
+
 const payload = z.object({
   name: z.string().min(1).max(200),
   contentType: z.string().min(3).max(120),
@@ -30,10 +37,6 @@ export const uploadMedia = createServerFn({ method: "POST" })
     const { getPersonalAdmin } = await import("./personal-supabase.server");
     const db = getPersonalAdmin();
 
-    const buckets = await db.storage.listBuckets();
-    if (!buckets.error && !buckets.data?.some((b: { name: string }) => b.name === BUCKET)) {
-      await db.storage.createBucket(BUCKET, { public: true });
-    }
 
     const path = `${Date.now()}-${data.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const { error } = await db.storage.from(BUCKET).upload(path, bytes, {
@@ -42,9 +45,6 @@ export const uploadMedia = createServerFn({ method: "POST" })
       upsert: false,
     });
     if (error) throw new Error(error.message);
-
-    const pub = db.storage.from(BUCKET).getPublicUrl(path);
-    if (pub.data?.publicUrl) return { url: pub.data.publicUrl };
 
     const signed = await db.storage.from(BUCKET).createSignedUrl(path, TEN_YEARS);
     if (signed.error || !signed.data) {
@@ -91,11 +91,7 @@ export const migrateMediaToPersonal = createServerFn({ method: "POST" }).handler
   const { getPersonalAdmin } = await import("./personal-supabase.server");
   const db = getPersonalAdmin();
 
-  const buckets = await db.storage.listBuckets();
-  if (!buckets.error && !buckets.data?.some((b: { name: string }) => b.name === BUCKET)) {
-    await db.storage.createBucket(BUCKET, { public: true });
-  }
-  const bucketMarker = `/storage/v1/object/public/${BUCKET}/`;
+  const bucketMarker = `/storage/v1/object/sign/${BUCKET}/`;
 
   const products = (await db.from("products").select("id, slug, card_url, images")).data ?? [];
   const settings = (await db.from("site_settings").select("key, value")).data ?? [];
@@ -131,7 +127,7 @@ export const migrateMediaToPersonal = createServerFn({ method: "POST" }).handler
       });
       if (error) throw new Error(error.message);
 
-      const publicUrl = db.storage.from(BUCKET).getPublicUrl(path).data?.publicUrl;
+      const publicUrl = await signedLink(db, path);
       if (!publicUrl) throw new Error("could not build a public link");
       map.set(url, publicUrl);
       copied += 1;
@@ -179,5 +175,5 @@ export const uploadSchematic = createServerFn({ method: "POST" })
     const path = `collaborations/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${data.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     const { error } = await db.storage.from(BUCKET).upload(path, bytes, { contentType: data.contentType, upsert: false });
     if (error) throw new Error(error.message);
-    return { url: db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl };
+    return { url: await signedLink(db, path) };
   });
