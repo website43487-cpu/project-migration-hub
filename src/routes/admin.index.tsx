@@ -50,6 +50,14 @@ const filters: { key: Filter; label: string }[] = [
 ];
 
 export const Route = createFileRoute("/admin/")({
+  head: () => ({ meta: [
+    { title: "Studio Orders — ObjektHaus" },
+    { name: "description", content: "Manage ObjektHaus studio orders and fulfilment." },
+    { property: "og:title", content: "Studio Orders — ObjektHaus" },
+    { property: "og:description", content: "Manage ObjektHaus studio orders and fulfilment." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   validateSearch: (s: Record<string, unknown>): { status: Filter } => {
     const v = String(s.status ?? "all");
     return { status: (filters.some((f) => f.key === v) ? v : "all") as Filter };

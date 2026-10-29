@@ -11,3 +11,4 @@
 
 - Self-host the site’s production fonts and preload only critical above-the-fold faces to avoid third-party font latency.
 - Keep showcase gesture ownership in ObserverShowcase, using stable stage geometry and separate wheel/finger directions, so mobile browser chrome and swipe momentum cannot skip panels.
+- Restore missing bundled media through generated Lovable Assets pointers while preserving originals in external storage; do not change application database routing during media-only repairs.
