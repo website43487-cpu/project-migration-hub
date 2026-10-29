@@ -1,0 +1,12 @@
+[
+  {"capability":"code","source":"TanStack Start app (21 routes)","outcome":"migrate","status":"in_progress","next_action":"copy source into project"},
+  {"capability":"schema","source":"supabase/personal-schema.sql (products, site_settings, orders, staff, order_audit)","outcome":"migrate","status":"in_progress","next_action":"Cloud migration"},
+  {"capability":"records","source":"personal Supabase project","outcome":"migrate","status":"pending","next_action":"seed starter rows; request CSV exports of products, site_settings, orders, order_audit"},
+  {"capability":"auth_customers","source":"managed Supabase auth (email/password)","outcome":"migrate","status":"pending","next_action":"Cloud auth; request users export (id, email)"},
+  {"capability":"auth_staff","source":"custom staff table + signed cookie","outcome":"migrate","status":"pending","next_action":"keep custom flow on Cloud; staff rows need export or owner re-setup"},
+  {"capability":"storage_media","source":"personal Supabase 'media' bucket","outcome":"migrate","status":"pending","next_action":"Cloud public bucket; existing file bytes need re-upload/copy"},
+  {"capability":"telegram_alerts","source":"Telegram bot","outcome":"preserve","status":"pending","next_action":"TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID secrets"},
+  {"capability":"secrets","source":"STAFF_SESSION_SECRET","outcome":"migrate","status":"pending","next_action":"generate"},
+  {"capability":"cutover","source":"old personal Supabase","outcome":"retire","status":"pending","next_action":"after data import"},
+  {"capability":"verification","source":"-","outcome":"verify","status":"pending","next_action":"build + route checks"}
+]
