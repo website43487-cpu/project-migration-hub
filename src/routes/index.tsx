@@ -13,9 +13,8 @@ import { useHero, usePanel5, useManifesto, useFeatured } from "@/lib/site";
 import heroVideo from "@/assets/hero-meadow.mp4.asset.json";
 import haloHero from "@/assets/halo-2.jpg.asset.json";
 import qalCard from "@/assets/qal-card.jpg.asset.json";
-import craftVideo from "@/assets/craft-plane.mp4.asset.json";
 import archiveDark from "@/assets/archive-dark.jpg";
-import heroPoster from "@/assets/hero-meadow-poster.jpg";
+import heroPoster from "@/assets/halo-pendant-poster.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,8 +74,8 @@ function Index() {
         <HeroVideo
           key={hero.videoUrl || heroVideo.url}
           src={hero.videoUrl || heroVideo.url}
-          poster={heroPoster}
-          label="A field of chamomile flowers swaying in the sun"
+          poster={heroPoster.url}
+          label="The Halo Pendant glowing in warm light"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/25 via-transparent to-ink/45" />
@@ -244,9 +243,10 @@ function Index() {
         <div>
         <Reveal className="image-veil mt-10 w-full rounded-xl lg:mt-0" delay={100}>
           <HeroVideo
-            key={panel5.videoUrl || craftVideo.url}
-            src={panel5.videoUrl || craftVideo.url}
-            label="A craftsman planing a plywood panel, shavings curling away"
+            key={panel5.videoUrl || heroVideo.url}
+            src={panel5.videoUrl || heroVideo.url}
+            poster={heroPoster.url}
+            label="The Halo Pendant and its illuminated plywood ribs"
             className="w-full rounded-xl object-cover lg:max-h-[58svh]"
           />
         </Reveal>
