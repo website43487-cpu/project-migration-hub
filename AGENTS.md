@@ -9,6 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- All app data (products, settings, orders, staff, audit) lives in Lovable Cloud and is reached only through server functions using the privileged client via `getPersonalAdmin()`; tables have RLS with no policies so the browser can never read them directly.
-- Studio staff sign-in is custom (PBKDF2 hashes in `staff`, HMAC-signed cookie with STAFF_SESSION_SECRET), separate from customer accounts, to keep studio access independent of shopper logins.
-- The `media` bucket is private (workspace blocks public buckets), so uploads return long-lived signed URLs.
+- Self-host the site’s production fonts and preload only critical above-the-fold faces to avoid third-party font latency.
+- Keep showcase gesture ownership in ObserverShowcase, using stable stage geometry and separate wheel/finger directions, so mobile browser chrome and swipe momentum cannot skip panels.

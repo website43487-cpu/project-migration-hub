@@ -1,12 +1,18 @@
-# Project Migration Hub
+# ObjektHaus new expirement
 
-/skill:migrate-external-project Source: code archive. Migrate the attached project into Lovable.
+create this exact website design 
+the eye and the burger menu on every panel make it as a nav bar transparent nav bar only icons are visible and clickable 
+make nav bar icons have a contrast feature so that it changes color according to the background so that its visible to normal naked eyes 
+
+add a burger menu features and other panels accordingly as every button is there
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://objekthausnew.lovable.app
+
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/8486af59-718c-41ad-adbf-5206320032be).
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/61d49c36-be52-4cea-87df-6bae4fabcedb).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.

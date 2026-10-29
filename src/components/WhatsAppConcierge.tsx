@@ -55,7 +55,7 @@ export function WhatsAppConcierge() {
   const send = (text: string) =>
     window.open(`${base}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
   const presets = path.startsWith("/flower/")
-    ? [`I have a question about this object: ${typeof window !== "undefined" ? window.location.href : ""}`, ...PRESETS]
+    ? [`I have a question about this object: ${window.location.href}`, ...PRESETS]
     : PRESETS;
 
   return (
