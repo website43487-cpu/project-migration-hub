@@ -1,0 +1,12 @@
+[
+  {"capability":"code","source":"TanStack Start app","outcome":"migrate","status":"verified","next_action":"none"},
+  {"capability":"schema","source":"personal-schema.sql","outcome":"migrate","status":"verified","next_action":"none"},
+  {"capability":"records","source":"personal Supabase","outcome":"migrate","status":"pending","next_action":"starter rows seeded; need CSV exports of products, site_settings, orders, order_audit"},
+  {"capability":"auth_customers","source":"managed auth email/password","outcome":"migrate","status":"pending","next_action":"Cloud email auth enabled; need users export (id, email) to relink order history"},
+  {"capability":"auth_staff","source":"custom staff table + signed cookie","outcome":"migrate","status":"pending","next_action":"owner creates account at /admin-login, or import staff export"},
+  {"capability":"storage_media","source":"media bucket","outcome":"migrate","status":"pending","next_action":"private Cloud bucket with signed links; 7 bundled photos/videos missing from archive"},
+  {"capability":"telegram_alerts","source":"Telegram bot","outcome":"preserve","status":"pending","next_action":"TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID"},
+  {"capability":"secrets","source":"STAFF_SESSION_SECRET","outcome":"migrate","status":"verified","next_action":"none"},
+  {"capability":"cutover","source":"old database","outcome":"retire","status":"pending","next_action":"after data import"},
+  {"capability":"verification","source":"-","outcome":"verify","status":"in_progress","next_action":"pages load; order + studio flows untested"}
+]
