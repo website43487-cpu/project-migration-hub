@@ -15,6 +15,14 @@ import {
 } from "@/lib/data.functions";
 
 export const Route = createFileRoute("/admin/products")({
+  head: () => ({ meta: [
+    { title: "Studio Products — ObjektHaus" },
+    { name: "description", content: "Manage ObjektHaus objects and product photographs." },
+    { property: "og:title", content: "Studio Products — ObjektHaus" },
+    { property: "og:description", content: "Manage ObjektHaus objects and product photographs." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: AdminProducts,
 });
 

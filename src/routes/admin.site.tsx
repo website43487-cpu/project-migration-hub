@@ -23,6 +23,14 @@ import {
 } from "@/lib/site";
 
 export const Route = createFileRoute("/admin/site")({
+  head: () => ({ meta: [
+    { title: "Studio Exhibition Settings — ObjektHaus" },
+    { name: "description", content: "Manage the ObjektHaus exhibition content and media." },
+    { property: "og:title", content: "Studio Exhibition Settings — ObjektHaus" },
+    { property: "og:description", content: "Manage the ObjektHaus exhibition content and media." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
   component: AdminSite,
 });
 
