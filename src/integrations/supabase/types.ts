@@ -14,42 +14,37 @@ export type Database = {
   }
   public: {
     Tables: {
-      design_submissions: {
+      order_audit: {
         Row: {
-          created_at: string
-          description: string
-          id: string
-          reference_url: string
-          status: string
-          title: string
-          updated_at: string
-          user_id: string
+          changed_at: string
+          field: string
+          id: number
+          new_value: string | null
+          old_value: string | null
+          order_id: string
         }
         Insert: {
-          created_at?: string
-          description?: string
-          id?: string
-          reference_url?: string
-          status?: string
-          title: string
-          updated_at?: string
-          user_id: string
+          changed_at?: string
+          field: string
+          id?: number
+          new_value?: string | null
+          old_value?: string | null
+          order_id: string
         }
         Update: {
-          created_at?: string
-          description?: string
-          id?: string
-          reference_url?: string
-          status?: string
-          title?: string
-          updated_at?: string
-          user_id?: string
+          changed_at?: string
+          field?: string
+          id?: number
+          new_value?: string | null
+          old_value?: string | null
+          order_id?: string
         }
         Relationships: []
       }
       orders: {
         Row: {
           address: string
+          courier: string | null
           created_at: string
           customer_name: string
           delivery_zone: string
@@ -57,6 +52,9 @@ export type Database = {
           id: string
           items: Json
           note: string | null
+          payment_method: string | null
+          payment_sender: string | null
+          payment_trx_id: string | null
           phone: string
           reference: string
           shipping: number
@@ -64,11 +62,13 @@ export type Database = {
           subtotal: number
           total: number
           total_weight: number
+          tracking_code: string | null
           updated_at: string
           user_id: string | null
         }
         Insert: {
           address: string
+          courier?: string | null
           created_at?: string
           customer_name: string
           delivery_zone?: string
@@ -76,6 +76,9 @@ export type Database = {
           id?: string
           items?: Json
           note?: string | null
+          payment_method?: string | null
+          payment_sender?: string | null
+          payment_trx_id?: string | null
           phone: string
           reference?: string
           shipping?: number
@@ -83,11 +86,13 @@ export type Database = {
           subtotal?: number
           total?: number
           total_weight?: number
+          tracking_code?: string | null
           updated_at?: string
           user_id?: string | null
         }
         Update: {
           address?: string
+          courier?: string | null
           created_at?: string
           customer_name?: string
           delivery_zone?: string
@@ -95,6 +100,9 @@ export type Database = {
           id?: string
           items?: Json
           note?: string | null
+          payment_method?: string | null
+          payment_sender?: string | null
+          payment_trx_id?: string | null
           phone?: string
           reference?: string
           shipping?: number
@@ -102,6 +110,7 @@ export type Database = {
           subtotal?: number
           total?: number
           total_weight?: number
+          tracking_code?: string | null
           updated_at?: string
           user_id?: string | null
         }
@@ -126,6 +135,7 @@ export type Database = {
           sort_order: number
           specs: Json
           stock_out: boolean
+          stock_quantity: number
           story: string
           updated_at: string
           weight_kg: number
@@ -149,6 +159,7 @@ export type Database = {
           sort_order?: number
           specs?: Json
           stock_out?: boolean
+          stock_quantity?: number
           story?: string
           updated_at?: string
           weight_kg?: number
@@ -172,40 +183,11 @@ export type Database = {
           sort_order?: number
           specs?: Json
           stock_out?: boolean
+          stock_quantity?: number
           story?: string
           updated_at?: string
           weight_kg?: number
           why?: string
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          address: string
-          created_at: string
-          email: string | null
-          full_name: string
-          id: string
-          phone: string
-          updated_at: string
-        }
-        Insert: {
-          address?: string
-          created_at?: string
-          email?: string | null
-          full_name?: string
-          id: string
-          phone?: string
-          updated_at?: string
-        }
-        Update: {
-          address?: string
-          created_at?: string
-          email?: string | null
-          full_name?: string
-          id?: string
-          phone?: string
-          updated_at?: string
         }
         Relationships: []
       }
@@ -227,24 +209,30 @@ export type Database = {
         }
         Relationships: []
       }
-      user_roles: {
+      staff: {
         Row: {
           created_at: string
+          email: string
           id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
+          password_hash: string
+          role: string
+          updated_at: string
         }
         Insert: {
           created_at?: string
+          email: string
           id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
+          password_hash: string
+          role?: string
+          updated_at?: string
         }
         Update: {
           created_at?: string
+          email?: string
           id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
+          password_hash?: string
+          role?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -253,16 +241,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "admin" | "super_admin"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -389,8 +371,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["admin", "super_admin"],
-    },
+    Enums: {},
   },
 } as const
