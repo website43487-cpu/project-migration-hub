@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { uploadMedia } from "@/lib/media.functions";
+import { MAX_MEDIA_BYTES } from "@/lib/media-policy";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   label: string;
@@ -27,6 +29,10 @@ export function MediaUpload({ label, value, onChange, accept = "image/*,video/*"
   const send = useServerFn(uploadMedia);
 
   const upload = async (file: File) => {
+    if (file.size > MAX_MEDIA_BYTES) {
+      setError("That file is larger than 45 MB — please use a smaller one.");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -69,26 +75,26 @@ export function MediaUpload({ label, value, onChange, accept = "image/*,video/*"
             e.target.value = "";
           }}
         />
-        <button
+        <Button variant="ghost"
           type="button"
           onClick={() => input.current?.click()}
           disabled={busy}
           className="caps link-underline disabled:opacity-40"
         >
           {busy ? "Uploading…" : "Upload"}
-        </button>
+        </Button>
         {value && (
-          <button type="button" onClick={() => onChange("")} className="caps opacity-50 hover:opacity-90">
+          <Button variant="ghost" type="button" disabled={busy} onClick={() => onChange("")} className="caps opacity-50 hover:opacity-90">
             Clear
-          </button>
+          </Button>
         )}
       </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
       {value &&
         (isVideo ? (
-          <video src={value} muted loop playsInline autoPlay className="h-28 rounded object-cover" />
+          <video src={value} muted playsInline controls preload="none" className="h-28 rounded object-cover" />
         ) : (
-          <img src={value} alt="" className="h-28 rounded object-cover" />
+          <img src={value} alt="" loading="lazy" decoding="async" className="h-28 rounded object-cover" />
         ))}
     </div>
   );
