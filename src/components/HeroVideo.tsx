@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-type Props = { src: string; label: string; poster?: string; className?: string };
+type Props = { src: string; label: string; poster?: string; className?: string; priority?: boolean };
 
 /**
  * Autoplaying background video.
@@ -8,12 +8,23 @@ type Props = { src: string; label: string; poster?: string; className?: string }
  * the `muted` attribute into the SSR markup — so we force it on the element and
  * retry playback on load and on the first user gesture.
  */
-export function HeroVideo({ src, label, poster, className = "" }: Props) {
+export function HeroVideo({ src, label, poster, className = "", priority = false }: Props) {
   const ref = useRef<HTMLVideoElement | null>(null);
+  const [active, setActive] = useState(priority);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) setActive(true);
+    }, { rootMargin: "200px" });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !active) return;
 
     el.muted = true;
     el.defaultMuted = true;
@@ -74,18 +85,18 @@ export function HeroVideo({ src, label, poster, className = "" }: Props) {
       document.removeEventListener("scroll", tryPlay);
       document.removeEventListener("visibilitychange", tryPlay);
     };
-  }, [src]);
+  }, [src, active]);
 
   return (
     <video
       ref={ref}
-      src={src}
+      src={active ? src : undefined}
       poster={poster}
-      autoPlay
+      autoPlay={active}
       muted
       loop
       playsInline
-      preload="auto"
+      preload={priority ? "metadata" : "none"}
       controls={false}
       disablePictureInPicture
       disableRemotePlayback

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
@@ -102,6 +103,7 @@ function SaveRow({ onSave, saved }: { onSave: () => void; saved: boolean }) {
 type MigrationResult = {
   found: number;
   copied: number;
+  skipped: number;
   productsUpdated: number;
   settingsUpdated: number;
   failed: string[];
@@ -121,7 +123,7 @@ function MediaMigration() {
     try {
       const res = (await run({})) as MigrationResult;
       setResult(res);
-      await qc.invalidateQueries();
+      await Promise.all([qc.invalidateQueries({ queryKey: ["products"] }), qc.invalidateQueries({ queryKey: ["admin-products"] }), qc.invalidateQueries({ queryKey: ["site_settings"] })]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not copy the media.");
     } finally {
@@ -137,18 +139,18 @@ function MediaMigration() {
         then points the site at the new copies. Safe to run more than once — files already stored
         with you are skipped.
       </p>
-      <button
+      <Button variant="outline"
         type="button"
         onClick={start}
         disabled={busy}
         className="caps mt-6 border border-current/40 px-5 py-2 text-xs disabled:opacity-50"
       >
         {busy ? "Copying…" : "Copy all media to my storage"}
-      </button>
+      </Button>
       {result && (
         <div className="mt-4 space-y-1 text-sm">
           <p>
-            {result.copied} of {result.found} files copied · {result.productsUpdated} objects and{" "}
+            {result.copied} files copied · {result.skipped} already in storage · {result.productsUpdated} objects and{" "}
             {result.settingsUpdated} page sections updated.
           </p>
           {result.failed.length > 0 && (

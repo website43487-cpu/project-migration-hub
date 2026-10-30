@@ -1,3 +1,4 @@
+import { useMediaCopies } from "@/lib/use-media-url";
 import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
@@ -19,7 +20,7 @@ import heroPoster from "@/assets/halo-pendant-poster.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/" }, { rel: "preload", as: "image", href: heroPoster.url, fetchPriority: "high" }],
     meta: [
       ...brandShareMeta,
       { title: "ObjektHaus — A Quiet Exhibition of Handcrafted Objects" },
@@ -50,6 +51,8 @@ function Arrow() {
 }
 
 function Index() {
+  const copies = useMediaCopies();
+  const media = (url: string) => copies[url] ?? url;
   const hero = useHero();
   const panel5 = usePanel5();
   const manifesto = useManifesto();
@@ -75,8 +78,9 @@ function Index() {
       <section id="hero" data-tone="light" className="panel justify-end bg-ink text-bone">
         <HeroVideo
           key={hero.videoUrl || heroVideo.url}
-          src={hero.videoUrl || heroVideo.url}
-          poster={heroPoster.url}
+          priority
+          src={media(hero.videoUrl || heroVideo.url)}
+          poster={media(heroPoster.url)}
           label="The Halo Pendant glowing in warm light"
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -246,8 +250,8 @@ function Index() {
         <Reveal className="image-veil mt-10 w-full rounded-xl lg:mt-0" delay={100}>
           <HeroVideo
             key={panel5.videoUrl || heroVideo.url}
-            src={panel5.videoUrl || heroVideo.url}
-            poster={heroPoster.url}
+            src={media(panel5.videoUrl || heroVideo.url)}
+            poster={media(heroPoster.url)}
             label="The Halo Pendant and its illuminated plywood ribs"
             className="w-full rounded-xl object-cover lg:max-h-[58svh]"
           />
@@ -271,7 +275,7 @@ function Index() {
         className="panel justify-end bg-ink text-ink-foreground"
       >
         <img
-          src={archiveDark}
+          src={media(archiveDark)}
           alt="Herbarium plate of pale botanical engravings on a dark ground"
           loading="lazy"
           width={1024}
