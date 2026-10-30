@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { CoCreatePanel } from "@/components/CoCreatePanel";
@@ -6,6 +7,7 @@ export const Route = createFileRoute("/collaborate")({
   head: () => ({
     links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/collaborate" }],
     meta: [
+      ...brandShareMeta,
       { title: "Got an Idea? — Co-create with ObjektHaus" },
       { name: "description", content: "Submit your object design to ObjektHaus. We review it, make it together and share profit from every sale." },
       { property: "og:title", content: "Got an Idea? — Co-create with ObjektHaus" },

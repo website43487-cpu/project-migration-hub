@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -7,12 +8,13 @@ import { createAdmin, listStaff, removeAdmin } from "@/lib/staff-auth.functions"
 export const Route = createFileRoute("/admin/staff")({
   head: () => ({
     meta: [
+      ...brandShareMeta,
       { title: "Studio Access — ObjektHaus" },
       { name: "description", content: "Grant or remove ObjektHaus studio admin access." },
       { property: "og:title", content: "Studio Access — ObjektHaus" },
       { property: "og:description", content: "Manage who can enter the studio panel." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

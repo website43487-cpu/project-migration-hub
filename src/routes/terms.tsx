@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "./privacy";
 
@@ -5,6 +6,9 @@ export const Route = createFileRoute("/terms")({
   head: () => ({
     links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/terms" }],
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:type", content: "website" },
+      ...brandShareMeta,
       { title: "Terms — ObjektHaus" },
       {
         name: "description",

@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
@@ -53,6 +54,7 @@ export const Route = createFileRoute("/flower/$slug")({
         ]
       : [],
     meta: [
+      ...brandShareMeta,
       { property: "og:url", content: `https://objekthausstudio.lovable.app/flower/${params.slug}` },
       { title: loaderData ? `${loaderData.product} — ${loaderData.name} | ObjektHaus` : "Floret — ObjektHaus" },
       {
@@ -63,7 +65,6 @@ export const Route = createFileRoute("/flower/$slug")({
       },
       { property: "og:title", content: loaderData ? `${loaderData.product} — ${loaderData.name} | ObjektHaus` : "Floret — ObjektHaus" },
       { property: "og:description", content: loaderData ? `${loaderData.product} — handcrafted plywood object with a numbered ${loaderData.name} archive card.` : "" },
-      ...(loaderData?.images?.[0]?.src?.startsWith("https") ? [{ property: "og:image", content: loaderData.images[0].src }, { name: "twitter:image", content: loaderData.images[0].src }] : []),
       { property: "og:type", content: "product" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

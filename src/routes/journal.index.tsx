@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteNav } from "@/components/SiteNav";
@@ -7,6 +8,7 @@ export const Route = createFileRoute("/journal/")({
   head: () => ({
     links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/journal" }],
     meta: [
+      ...brandShareMeta,
       { title: "The Journal — ObjektHaus Studio Notes" },
       { name: "description", content: "Studio notes from ObjektHaus in Dhaka: our cause, object improvements, materials and the making of handcrafted plywood objects." },
       { property: "og:url", content: "https://objekthausstudio.lovable.app/journal" },

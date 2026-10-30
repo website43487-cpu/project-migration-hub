@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { useJournal } from "@/lib/journal";
@@ -6,6 +7,7 @@ export const Route = createFileRoute("/journal/$slug")({
   head: ({ params }) => ({
     links: [{ rel: "canonical", href: `https://objekthausstudio.lovable.app/journal/${params.slug}` }],
     meta: [
+      ...brandShareMeta,
       { title: `${params.slug.replace(/-/g, " ")} — ObjektHaus Journal` },
       { name: "description", content: "A studio note from the ObjektHaus Journal — handcrafted plywood objects made in Dhaka." },
       { property: "og:url", content: `https://objekthausstudio.lovable.app/journal/${params.slug}` },

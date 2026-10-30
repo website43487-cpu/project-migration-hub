@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -11,12 +12,13 @@ import { formatPrice } from "@/lib/cart";
 export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
+      ...brandShareMeta,
       { title: "Your Orders — ObjektHaus" },
       { name: "description", content: "Track your ObjektHaus orders and see the status of every object you reserved." },
       { property: "og:title", content: "Your Orders — ObjektHaus" },
       { property: "og:description", content: "Track your ObjektHaus orders and their status." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

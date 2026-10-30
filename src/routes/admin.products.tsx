@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -16,12 +17,13 @@ import {
 
 export const Route = createFileRoute("/admin/products")({
   head: () => ({ meta: [
+      ...brandShareMeta,
     { title: "Studio Products — ObjektHaus" },
     { name: "description", content: "Manage ObjektHaus objects and product photographs." },
     { property: "og:title", content: "Studio Products — ObjektHaus" },
     { property: "og:description", content: "Manage ObjektHaus objects and product photographs." },
     { property: "og:type", content: "website" },
-    { name: "twitter:card", content: "summary" },
+    { name: "twitter:card", content: "summary_large_image" },
   ] }),
   component: AdminProducts,
 });

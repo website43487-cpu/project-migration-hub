@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { Reveal, RuleLine } from "@/components/Reveal";
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/archive")({
   head: () => ({
     links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/archive" }],
     meta: [
+      ...brandShareMeta,
       { title: "Botanical Archive — ObjektHaus" },
       {
         name: "description",

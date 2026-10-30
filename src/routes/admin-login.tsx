@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -9,12 +10,13 @@ import { SiteNav } from "@/components/SiteNav";
 export const Route = createFileRoute("/admin-login")({
   head: () => ({
     meta: [
+      ...brandShareMeta,
       { title: "Studio Sign In — ObjektHaus" },
       { name: "description", content: "Sign in to the ObjektHaus studio panel to manage orders, objects and site content." },
       { property: "og:title", content: "Studio Sign In — ObjektHaus" },
       { property: "og:description", content: "Staff sign-in for the ObjektHaus studio panel." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

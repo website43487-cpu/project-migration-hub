@@ -97,11 +97,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "ObjektHaus — A Quiet Exhibition of Objects" },
       { name: "twitter:description", content: "Scroll through the ObjektHaus exhibition: Object No.07, its botanical archive card, the materials behind it and the flowers that name each plywood object." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/77d364da-9d6a-4262-b877-d108a1ff9b4a/id-preview-79954780--e4e53be1-a0ef-415a-b785-961eb1359115.lovable.app-1785239975548.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/77d364da-9d6a-4262-b877-d108a1ff9b4a/id-preview-79954780--e4e53be1-a0ef-415a-b785-961eb1359115.lovable.app-1785239975548.png" },
     ],
     scripts: [
       {
@@ -128,7 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
     ],
   }),
   shellComponent: RootShell,
