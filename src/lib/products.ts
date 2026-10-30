@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { flowers, type Flower } from "@/lib/flowers";
 import { listProducts } from "@/lib/data.functions";
 import { useSetting } from "@/lib/site";
+import { useMediaCopies } from "./use-media-url";
 
 export type ProductRow = {
   id: string;
@@ -99,6 +100,7 @@ export function useHiddenSlugs(): string[] {
 export function useAllFlowers(): Flower[] {
   const rows = usePublishedProducts();
   const hidden = useHiddenSlugs();
+  const copies = useMediaCopies();
 
   const overridden = flowers.map((f) => {
     const row = rows.find((r) => r.slug === f.slug);
@@ -108,7 +110,11 @@ export function useAllFlowers(): Flower[] {
     .filter((r) => !flowers.some((f) => f.slug === r.slug))
     .map(mergeWithBuiltIn);
 
-  return [...overridden, ...extra].filter((f) => !hidden.includes(f.slug));
+  return [...overridden, ...extra].filter((f) => !hidden.includes(f.slug)).map((f) => ({
+    ...f,
+    card: copies[f.card] ?? f.card,
+    images: f.images.map((image) => ({ ...image, src: copies[image.src] ?? image.src })),
+  }));
 }
 
 /** Studio objects override the built-in copy when the slug matches. */

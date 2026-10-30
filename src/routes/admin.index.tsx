@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -51,12 +52,13 @@ const filters: { key: Filter; label: string }[] = [
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({ meta: [
+      ...brandShareMeta,
     { title: "Studio Orders — ObjektHaus" },
     { name: "description", content: "Manage ObjektHaus studio orders and fulfilment." },
     { property: "og:title", content: "Studio Orders — ObjektHaus" },
     { property: "og:description", content: "Manage ObjektHaus studio orders and fulfilment." },
     { property: "og:type", content: "website" },
-    { name: "twitter:card", content: "summary" },
+    { name: "twitter:card", content: "summary_large_image" },
   ] }),
   validateSearch: (s: Record<string, unknown>): { status: Filter } => {
     const v = String(s.status ?? "all");

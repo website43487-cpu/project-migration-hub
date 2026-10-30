@@ -7,6 +7,7 @@ import { useCart } from "@/lib/cart";
 import eyeMark from "@/assets/objekthaus-logo.svg.asset.json";
 import { WordmarkGlyph } from "./WordmarkGlyph";
 import { useFaq } from "@/lib/motion";
+import { useMediaUrl } from "@/lib/use-media-url";
 
 const items: { no: string; label: string; to?: string; hash?: string; faq?: boolean }[] = [
   { no: "I", label: "Botanical Archive", to: "/archive" },
@@ -20,11 +21,12 @@ const items: { no: string; label: string; to?: string; hash?: string; faq?: bool
 
 /** The original hand-brushed ObjektHaus eye, drawn in currentColor via a mask. */
 function EyeIcon({ className = "" }: { className?: string }) {
+  const logoUrl = useMediaUrl(eyeMark.url);
   return (
     <span
       aria-hidden="true"
       className={`ink-mark block h-[26px] w-[44px] sm:h-[30px] sm:w-[50px] ${className}`}
-      style={{ maskImage: `url(${eyeMark.url})`, WebkitMaskImage: `url(${eyeMark.url})` }}
+      style={{ maskImage: `url(${logoUrl})`, WebkitMaskImage: `url(${logoUrl})` }}
     />
   );
 }

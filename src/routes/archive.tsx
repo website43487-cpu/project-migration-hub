@@ -1,3 +1,5 @@
+import { brandShareMeta } from "@/lib/brand-media";
+import { useMediaCopies } from "@/lib/use-media-url";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { Reveal, RuleLine } from "@/components/Reveal";
@@ -12,6 +14,7 @@ export const Route = createFileRoute("/archive")({
   head: () => ({
     links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/archive" }],
     meta: [
+      ...brandShareMeta,
       { title: "Botanical Archive — ObjektHaus" },
       {
         name: "description",
@@ -33,6 +36,7 @@ export const Route = createFileRoute("/archive")({
 
 function Archive() {
   const flowers = useAllFlowers();
+  const copies = useMediaCopies();
   const [hover, setHover] = useState<Flower | null>(null);
 
   return (
@@ -41,7 +45,7 @@ function Archive() {
 
       <header className="relative flex min-h-[70svh] flex-col justify-end overflow-hidden px-7 pb-12 sm:px-10 lg:min-h-[80svh] lg:px-16 lg:pb-20">
         <img
-          src={archiveDark}
+          src={copies[archiveDark] ?? archiveDark}
           alt="Herbarium plate of botanical engravings"
           width={1024}
           height={1408}
@@ -96,7 +100,7 @@ function Archive() {
       <section className="mx-auto max-w-5xl px-7 pb-24 sm:px-10">
         <Reveal className="border border-current/20 p-8 text-center">
           <img
-            src={qalCard.url}
+            src={copies[qalCard.url] ?? qalCard.url}
             alt="Archive card of Queen Anne's Lace"
             loading="lazy"
             width={1024}

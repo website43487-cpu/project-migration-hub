@@ -9,6 +9,7 @@ export function ImageWithSkeleton({ className = "", frameClassName = "", onLoad,
     <span className={`image-skeleton-frame relative block overflow-hidden ${frameClassName}`}>
       {!loaded && !failed && <span aria-hidden="true" className="image-skeleton absolute inset-0 block" />}
       <img
+        decoding="async"
         {...props}
         onLoad={(e) => { setLoaded(true); onLoad?.(e); }}
         onError={(e) => { setFailed(true); onError?.(e); }}

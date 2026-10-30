@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,12 +8,13 @@ import { SiteNav } from "@/components/SiteNav";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
+      ...brandShareMeta,
       { title: "Account — ObjektHaus" },
       { name: "description", content: "Sign in or create an ObjektHaus account to follow your orders." },
       { property: "og:title", content: "Account — ObjektHaus" },
       { property: "og:description", content: "Your ObjektHaus account." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

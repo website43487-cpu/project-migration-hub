@@ -1,3 +1,4 @@
+import { brandShareMeta } from "@/lib/brand-media";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/order")({
   head: () => ({
     links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/order" }],
     meta: [
+      ...brandShareMeta,
       { title: "Checkout — ObjektHaus" },
       {
         name: "description",
