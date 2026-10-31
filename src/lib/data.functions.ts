@@ -17,6 +17,12 @@ async function assertAdmin() {
   await requireStaff();
 }
 
+/** Origin of the current request, used to fetch bundled site media for copying. */
+async function requestOrigin() {
+  const { getRequest } = await import("@tanstack/react-start/server");
+  return new URL(getRequest().url).origin;
+}
+
 /** True when the personal database hasn't had the schema script run yet. */
 function isMissingTable(error: any) {
   return (
