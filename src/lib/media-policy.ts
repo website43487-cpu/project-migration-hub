@@ -29,3 +29,32 @@ export function replacedMediaPaths(before: unknown, after: unknown, references: 
   const usedPaths = new Set([...next, ...used].map((url) => personalObjectPath(url, origin)).filter(Boolean));
   return [...new Set([...collectMedia(before)].map((url) => personalObjectPath(url, origin)).filter((path): path is string => Boolean(path) && !usedPaths.has(path)))];
 }
+
+/** Media links that appear in the saved value but were not in the previous one. */
+export function addedMedia(before: unknown, after: unknown): string[] {
+  const prior = collectMedia(before);
+  return [...collectMedia(after)].filter((url) => !prior.has(url));
+}
+
+export type CleanupPlan = { remove: string[]; blocked: string[] };
+
+/**
+ * Decides which old files may be deleted. Nothing is removed unless every new
+ * replacement lives in personal storage and was confirmed present there.
+ */
+export function planReplacementCleanup(input: {
+  before: unknown;
+  after: unknown;
+  references: unknown;
+  origin: string;
+  verifiedPaths: Set<string>;
+}): CleanupPlan {
+  const blocked = addedMedia(input.before, input.after).filter((url) => {
+    const path = personalObjectPath(url, input.origin);
+    return !path || !input.verifiedPaths.has(path);
+  });
+  if (blocked.length) return { remove: [], blocked };
+  const remove = replacedMediaPaths(input.before, input.after, input.references, input.origin)
+    .filter((path) => !path.startsWith("branding/"));
+  return { remove, blocked: [] };
+}

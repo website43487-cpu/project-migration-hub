@@ -17,6 +17,12 @@ async function assertAdmin() {
   await requireStaff();
 }
 
+/** Origin of the current request, used to fetch bundled site media for copying. */
+async function requestOrigin() {
+  const { getRequest } = await import("@tanstack/react-start/server");
+  return new URL(getRequest().url).origin;
+}
+
 /** True when the personal database hasn't had the schema script run yet. */
 function isMissingTable(error: any) {
   return (
@@ -212,12 +218,13 @@ export const adminSaveProduct = createServerFn({ method: "POST" })
     await assertAdmin();
     const db = await personalAdmin();
     if (data.id) {
-      const { id, ...rest } = data;
+      const { id, ...input } = data;
       const { data: previous, error: readError } = await db.from("products").select("card_url, images").eq("id", id).single();
       assertSchema(readError);
+      const { storeReplacementsInPersonal, cleanupReplacedMedia } = await import("./media-cleanup.server");
+      const rest = await storeReplacementsInPersonal(previous, input, await requestOrigin());
       const { error } = await db.from("products").update(rest).eq("id", id);
       assertSchema(error);
-      const { cleanupReplacedMedia } = await import("./media-cleanup.server");
       await cleanupReplacedMedia(previous, rest);
     } else {
       const { id: _omit, ...rest } = data;
@@ -246,10 +253,13 @@ export const adminSaveSetting = createServerFn({ method: "POST" })
     const db = await personalAdmin();
     const { data: previous, error: readError } = await db.from("site_settings").select("value").eq("key", data.key).maybeSingle();
     assertSchema(readError);
-    const { error } = await db.from("site_settings").upsert({ key: data.key, value: data.value });
+    const { storeReplacementsInPersonal, cleanupReplacedMedia } = await import("./media-cleanup.server");
+    const value = data.key === "media_copies"
+      ? data.value
+      : await storeReplacementsInPersonal(previous?.value, data.value, await requestOrigin());
+    const { error } = await db.from("site_settings").upsert({ key: data.key, value });
     assertSchema(error);
-    const { cleanupReplacedMedia } = await import("./media-cleanup.server");
-    await cleanupReplacedMedia(previous?.value, data.value);
+    if (data.key !== "media_copies") await cleanupReplacedMedia(previous?.value, value);
     return { ok: true };
   });
 
