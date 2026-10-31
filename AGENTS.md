@@ -13,5 +13,5 @@
 - Keep showcase gesture ownership in ObserverShowcase, using stable stage geometry and separate wheel/finger directions, so mobile browser chrome and swipe momentum cannot skip panels.
 - Restore missing bundled media through generated Lovable Assets pointers while preserving originals in external storage; do not change application database routing during media-only repairs.
 - Keep the media copy catalog build-resolved and process copies in bounded batches; persist the URL map so retries reuse completed files without overwrites.
-- Run replacement cleanup only after authorized saves succeed and all media references are read successfully; never delete shared files or branding originals.
+- Copy new media into personal storage before saving, and run replacement cleanup only after the save succeeds, every replacement is confirmed present there, and all media references are read; never delete shared files or branding originals.
 - Put logo sharing metadata on leaf routes through the shared brand-media module, never on the root layout.

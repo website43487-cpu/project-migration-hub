@@ -1,7 +1,7 @@
 # Roadmap
 - [x] Add logo favicon and page sharing image
 - [x] Copy all website media to personal storage without changing database routing
-- [ ] Improve media loading and delete replaced files only after saving, preserving shared media
+- [x] Improve media loading and delete replaced files only after replacements are copied to and verified in personal storage, preserving shared media
 - [x] Slider: mobile hard-swipe lock (one swipe = one panel)
 - [x] Journal: exact Panel Pop layout (7 sections)
 - [x] Backend (SQL ready; owner must run it): order audit trail, TrxID dedup, courier tracking
