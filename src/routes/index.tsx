@@ -12,7 +12,6 @@ import { Wordmark } from "@/components/SiteNav";
 import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { useAllFlowers } from "@/lib/products";
 import { useHero, usePanel5, useManifesto, useFeatured } from "@/lib/site";
-import heroVideo from "@/assets/hero-meadow.mp4.asset.json";
 import haloHero from "@/assets/halo-2.jpg.asset.json";
 import qalCard from "@/assets/qal-card.jpg.asset.json";
 import archiveDark from "@/assets/archive-dark.jpg";
@@ -77,9 +76,9 @@ function Index() {
       {/* I — Entrance */}
       <section id="hero" data-tone="light" className="panel justify-end bg-ink text-bone">
         <HeroVideo
-          key={hero.videoUrl || heroVideo.url}
+          key={hero.videoUrl}
           priority
-          src={media(hero.videoUrl || heroVideo.url)}
+          src={media(hero.videoUrl)}
           poster={media(heroPoster.url)}
           label="The Halo Pendant glowing in warm light"
           className="absolute inset-0 h-full w-full object-cover"
@@ -249,8 +248,8 @@ function Index() {
         <div>
         <Reveal className="image-veil mt-10 w-full rounded-xl lg:mt-0" delay={100}>
           <HeroVideo
-            key={panel5.videoUrl || heroVideo.url}
-            src={media(panel5.videoUrl || heroVideo.url)}
+            key={panel5.videoUrl || hero.videoUrl}
+            src={media(panel5.videoUrl || hero.videoUrl)}
             poster={media(heroPoster.url)}
             label="The Halo Pendant and its illuminated plywood ribs"
             className="w-full rounded-xl object-cover lg:max-h-[58svh]"
