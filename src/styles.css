@@ -447,9 +447,13 @@
 
 
 /* Neutral image placeholders; never flash a white box while product media loads. */
-.image-skeleton-frame { background: #d8d5cc; isolation: isolate; }
+.image-skeleton-frame { background: var(--muted); isolation: isolate; }
+.image-skeleton-frame:not(.absolute):not(.fixed) { position: relative; }
+.image-skeleton-frame:not(.h-full):not([class*="aspect-"]) { aspect-ratio: auto 4 / 3; }
+.skeleton-media { opacity: 0; transition: opacity 300ms ease; }
+.skeleton-media[data-ready="true"] { opacity: 1; }
 .image-skeleton {
-  background: linear-gradient(100deg, #d8d5cc 20%, #e6e3dc 38%, #d8d5cc 56%);
+  background: linear-gradient(100deg, var(--muted) 20%, var(--background) 38%, var(--muted) 56%);
   background-size: 220% 100%;
   animation: image-skeleton-shimmer 1.35s ease-in-out infinite;
 }

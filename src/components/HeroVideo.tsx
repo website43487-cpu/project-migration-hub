@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type Props = { src: string; label: string; poster?: string; className?: string; priority?: boolean };
+type Props = { src: string; label: string; className?: string; priority?: boolean };
 
 /**
  * Autoplaying background video.
@@ -8,9 +8,11 @@ type Props = { src: string; label: string; poster?: string; className?: string; 
  * the `muted` attribute into the SSR markup — so we force it on the element and
  * retry playback on load and on the first user gesture.
  */
-export function HeroVideo({ src, label, poster, className = "", priority = false }: Props) {
+export function HeroVideo({ src, label, className = "", priority = false }: Props) {
   const ref = useRef<HTMLVideoElement | null>(null);
   const [active, setActive] = useState(priority);
+  const [readySource, setReadySource] = useState<string>();
+  const ready = readySource === src;
 
   useEffect(() => {
     const el = ref.current;
@@ -88,10 +90,11 @@ export function HeroVideo({ src, label, poster, className = "", priority = false
   }, [src, active]);
 
   return (
+    <span aria-busy={!ready} className={`image-skeleton-frame block overflow-hidden ${className}`}>
+    {!ready && <span aria-hidden="true" className="image-skeleton absolute inset-0 block" />}
     <video
       ref={ref}
       src={active ? src : undefined}
-      poster={poster}
       autoPlay={active}
       muted
       loop
@@ -101,7 +104,11 @@ export function HeroVideo({ src, label, poster, className = "", priority = false
       disablePictureInPicture
       disableRemotePlayback
       aria-label={label}
-      className={className}
+      onLoadedData={() => setReadySource(src)}
+      onPlaying={() => setReadySource(src)}
+      data-ready={ready}
+      className="skeleton-media h-full w-full object-cover"
     />
+    </span>
   );
 }

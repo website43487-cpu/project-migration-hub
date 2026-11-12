@@ -1,3 +1,4 @@
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { brandShareMeta } from "@/lib/brand-media";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -151,7 +152,7 @@ function Order() {
                 <ul className="mt-4 divide-y divide-current/18">
                   {lines.map((l) => (
                     <li key={l.slug} className="flex gap-5 py-6">
-                      <img
+                      <ImageWithSkeleton
                         src={l.image}
                         alt={l.product}
                         loading="lazy"

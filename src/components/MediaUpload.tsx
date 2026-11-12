@@ -1,3 +1,5 @@
+import { VideoWithSkeleton } from "@/components/VideoWithSkeleton";
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { uploadMedia } from "@/lib/media.functions";
@@ -92,9 +94,9 @@ export function MediaUpload({ label, value, onChange, accept = "image/*,video/*"
       {error && <p className="text-sm text-red-500">{error}</p>}
       {value &&
         (isVideo ? (
-          <video src={value} muted playsInline controls preload="none" className="h-28 rounded object-cover" />
+          <VideoWithSkeleton src={value} muted playsInline controls preload="metadata" className="h-28 rounded object-cover" />
         ) : (
-          <img src={value} alt="" loading="lazy" decoding="async" className="h-28 rounded object-cover" />
+          <ImageWithSkeleton src={value} alt="" loading="lazy" decoding="async" className="h-28 rounded object-cover" />
         ))}
     </div>
   );

@@ -1,3 +1,4 @@
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { Link } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -57,7 +58,7 @@ export function CartDrawer() {
             <ul className="divide-y divide-current/12">
               {lines.map((l) => (
                 <li key={l.slug} className="flex gap-4 py-6">
-                  <img
+                  <ImageWithSkeleton
                     src={l.image}
                     alt={l.name}
                     width={1020}
