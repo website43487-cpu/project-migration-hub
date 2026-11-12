@@ -15,3 +15,4 @@
 - Keep the media copy catalog build-resolved and process copies in bounded batches; persist the URL map so retries reuse completed files without overwrites.
 - Copy new media into personal storage before saving, and run replacement cleanup only after the save succeeds, every replacement is confirmed present there, and all media references are read; never delete shared files or branding originals.
 - Put logo sharing metadata on leaf routes through the shared brand-media module, never on the root layout.
+- Render media through shared loading frames keyed by source readiness so replacements and cached loads never reveal stale previews.

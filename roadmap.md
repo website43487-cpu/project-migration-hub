@@ -1,4 +1,5 @@
 # Roadmap
+- [ ] Show skeletons before all photos/videos and remove the obsolete pendant preview from storage and saved references
 - [x] Add logo favicon and page sharing image
 - [x] Copy all website media to personal storage without changing database routing
 - [x] Improve media loading and delete replaced files only after replacements are copied to and verified in personal storage, preserving shared media
