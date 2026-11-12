@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type Props = { src: string; label: string; poster?: string; className?: string; priority?: boolean };
+type Props = { src: string; label: string; className?: string; priority?: boolean };
 
 /**
  * Autoplaying background video.
@@ -8,7 +8,7 @@ type Props = { src: string; label: string; poster?: string; className?: string; 
  * the `muted` attribute into the SSR markup — so we force it on the element and
  * retry playback on load and on the first user gesture.
  */
-export function HeroVideo({ src, label, poster, className = "", priority = false }: Props) {
+export function HeroVideo({ src, label, className = "", priority = false }: Props) {
   const ref = useRef<HTMLVideoElement | null>(null);
   const [active, setActive] = useState(priority);
   const [readySource, setReadySource] = useState<string>();
