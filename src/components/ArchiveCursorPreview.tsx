@@ -1,3 +1,4 @@
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { loadGsap } from "@/lib/motion";
@@ -32,7 +33,7 @@ export function ArchiveCursorPreview({ active }: { active: Flower | null }) {
   if (!mounted) return null;
   return createPortal(
     <div ref={ref} aria-hidden="true" className="pointer-events-none fixed top-0 left-0 z-50 hidden w-56 border border-current/20 bg-ink p-2 shadow-2xl lg:block" style={{ visibility: "hidden" }}>
-      {src && <img key={src} src={src} alt="" className="aspect-[4/5] w-full object-cover" />}
+      {src && <ImageWithSkeleton key={src} src={src} alt="" className="aspect-[4/5] w-full object-cover" />}
       {active && <p className="caps mt-2 text-[10px] opacity-75">{active.product}</p>}
     </div>,
     document.body,

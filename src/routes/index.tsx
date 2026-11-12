@@ -15,11 +15,10 @@ import { useHero, usePanel5, useManifesto, useFeatured } from "@/lib/site";
 import haloHero from "@/assets/halo-2.jpg.asset.json";
 import qalCard from "@/assets/qal-card.jpg.asset.json";
 import archiveDark from "@/assets/archive-dark.jpg";
-import heroPoster from "@/assets/halo-pendant-poster.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/" }, { rel: "preload", as: "image", href: heroPoster.url, fetchPriority: "high" }],
+    links: [{ rel: "canonical", href: "https://objekthausstudio.lovable.app/" }],
     meta: [
       ...brandShareMeta,
       { title: "ObjektHaus — A Quiet Exhibition of Handcrafted Objects" },
@@ -79,7 +78,6 @@ function Index() {
           key={hero.videoUrl}
           priority
           src={media(hero.videoUrl)}
-          poster={media(heroPoster.url)}
           label="The Halo Pendant glowing in warm light"
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -157,7 +155,7 @@ function Index() {
       <section id="card" data-tone="dark" className="panel bg-sand text-sand-foreground">
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-16">
         <Reveal className="image-veil mx-auto w-full max-w-xs lg:max-w-sm">
-          <img
+          <ImageWithSkeleton
             src={featured?.card || qalCard.url}
             alt={`Botanical archive card of ${featured?.name ?? "Queen Anne's Lace"}`}
             loading="lazy"
@@ -250,8 +248,7 @@ function Index() {
           <HeroVideo
             key={panel5.videoUrl || hero.videoUrl}
             src={media(panel5.videoUrl || hero.videoUrl)}
-            poster={media(heroPoster.url)}
-            label="The Halo Pendant and its illuminated plywood ribs"
+              label="The Halo Pendant and its illuminated plywood ribs"
             className="w-full rounded-xl object-cover lg:max-h-[58svh]"
           />
         </Reveal>
@@ -273,7 +270,7 @@ function Index() {
         data-tone="light"
         className="panel justify-end bg-ink text-ink-foreground"
       >
-        <img
+        <ImageWithSkeleton
           src={media(archiveDark)}
           alt="Herbarium plate of pale botanical engravings on a dark ground"
           loading="lazy"

@@ -1,3 +1,4 @@
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
@@ -49,7 +50,7 @@ function Post() {
             </header>
             {post.cover && (
               <figure className="mt-8 sm:mt-10">
-                <img src={post.cover} alt={post.title} fetchPriority="high" className="max-h-[70vh] w-full bg-sand object-cover" />
+                <ImageWithSkeleton src={post.cover} alt={post.title} fetchPriority="high" className="max-h-[70vh] w-full bg-sand object-cover" />
                 <figcaption className="mt-3 text-[10px] uppercase tracking-[0.16em] opacity-45">ObjektHaus · Studio journal</figcaption>
               </figure>
             )}

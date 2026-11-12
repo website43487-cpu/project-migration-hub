@@ -1,3 +1,4 @@
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -167,7 +168,7 @@ function FlowerCard() {
           <h2 className="caps opacity-55">The representing flower card</h2>
           <RuleLine className="mt-3" />
           <div className="mt-6 flex flex-col items-center border border-current/20 p-8 text-center">
-            <img
+            <ImageWithSkeleton
               src={f.card}
               alt={`Botanical archive card engraving of ${f.name}`}
               loading="lazy"
@@ -248,7 +249,7 @@ function Loupe(props: React.ImgHTMLAttributes<HTMLImageElement>) {
       }}
       onPointerLeave={() => setZ(null)}
     >
-      <img
+      <ImageWithSkeleton
         {...props}
         className={`${props.className ?? ""} transition-transform duration-300`}
         style={z ? { transform: "scale(2.2)", transformOrigin: z } : undefined}

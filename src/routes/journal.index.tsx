@@ -1,3 +1,4 @@
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { brandShareMeta } from "@/lib/brand-media";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
@@ -80,7 +81,7 @@ function Journal() {
             <PostLink post={featured} className="group order-1 block lg:order-2">
               <div className="relative aspect-[5/4] overflow-hidden bg-sand">
                 {featured.cover ? (
-                  <img src={featured.cover} alt={featured.title} fetchPriority="high" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+                  <ImageWithSkeleton src={featured.cover} alt={featured.title} fetchPriority="high" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
                 ) : (
                   <div className="flex h-full items-end p-8"><span className="font-display text-4xl font-light opacity-35">ObjektHaus / Studio archive</span></div>
                 )}
@@ -105,7 +106,7 @@ function Journal() {
                   {filtered.map((post, index) => (
                     <PostLink key={post.slug} post={post} className="group border-b border-ink/15 py-7">
                       <div className="overflow-hidden bg-sand">
-                        {post.cover ? <img src={post.cover} alt={post.title} loading="lazy" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.025]" /> : <div className="aspect-[4/3] bg-olive/10" />}
+                        {post.cover ? <ImageWithSkeleton src={post.cover} alt={post.title} loading="lazy" className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.025]" /> : <div className="aspect-[4/3] bg-olive/10" />}
                       </div>
                       <div className="mt-5 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.16em] opacity-55">
                         <span>{volume(posts.indexOf(post))} · {post.category}</span><span>{readMinutes(post)} min</span>
@@ -155,7 +156,7 @@ function Journal() {
                 {posts.slice(0, 12).map((post, index) => (
                   <PostLink key={post.slug} post={post} className="group flex min-h-64 w-36 shrink-0 flex-col justify-between border border-bone/25 bg-ink/10 p-4 transition-colors hover:bg-bone/10 sm:w-44">
                     <span className="text-[10px] uppercase tracking-[0.16em] opacity-60">{volume(index)}</span>
-                    {post.cover && <img src={post.cover} alt="" loading="lazy" className="my-4 aspect-[3/4] w-full object-cover opacity-80 transition group-hover:opacity-100" />}
+                    {post.cover && <ImageWithSkeleton src={post.cover} alt="" loading="lazy" className="my-4 aspect-[3/4] w-full object-cover opacity-80 transition group-hover:opacity-100" />}
                     <span className="font-display text-xl font-light leading-tight">{post.title}</span>
                   </PostLink>
                 ))}
