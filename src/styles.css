@@ -449,7 +449,7 @@
 /* Neutral image placeholders; never flash a white box while product media loads. */
 .image-skeleton-frame { background: var(--muted); isolation: isolate; }
 .image-skeleton-frame:not(.absolute):not(.fixed) { position: relative; }
-.image-skeleton-frame:not(.h-full):not([class*="aspect-"]):not(.has-intrinsic-ratio) { aspect-ratio: auto 4 / 3; }
+.image-skeleton-frame:not(.h-full):not([class*="aspect-"]) { aspect-ratio: auto 4 / 3; }
 .skeleton-media { opacity: 0; transition: opacity 300ms ease; }
 .skeleton-media[data-ready="true"] { opacity: 1; }
 .image-skeleton {
