@@ -22,6 +22,8 @@ export function ImageWithSkeleton({ className = "", frameClassName = "", onLoad,
       <img
         ref={ref}
         decoding="async"
+        width={width}
+        height={height}
         {...props}
         style={style}
         data-ready={loaded}
