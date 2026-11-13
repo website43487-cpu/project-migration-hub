@@ -1,12 +1,12 @@
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { Link, useRouter } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavTone } from "./use-nav-tone";
 import { SocialLinks } from "./Social";
 import { useCart } from "@/lib/cart";
 import eyeMark from "@/assets/objekthaus-logo.svg.asset.json";
 import { WordmarkGlyph } from "./WordmarkGlyph";
-import { useFaq } from "@/lib/motion";
+import { loadGsap, prefersReducedMotion, useFaq } from "@/lib/motion";
 import { useMediaUrl } from "@/lib/use-media-url";
 
 const items: { no: string; label: string; to?: string; hash?: string; faq?: boolean }[] = [
