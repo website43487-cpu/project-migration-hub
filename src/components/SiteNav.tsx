@@ -43,6 +43,45 @@ export function SiteNav() {
   const faq = useFaq();
   const [faqOpen, setFaqOpen] = useState(false);
   const [openQ, setOpenQ] = useState<number | null>(null);
+  const faqPanelRef = useRef<HTMLDivElement>(null);
+
+  // Slides the question list in on open and out on close (GSAP, browser-only).
+  useEffect(() => {
+    const panel = faqPanelRef.current;
+    if (!panel) return;
+    let cancelled = false;
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return;
+      const items = panel.querySelectorAll("[data-faq-item]");
+      gsap.killTweensOf([panel, ...items]);
+      if (prefersReducedMotion()) {
+        gsap.set(panel, { display: faqOpen ? "block" : "none", height: faqOpen ? "auto" : 0 });
+        gsap.set(items, { x: 0, autoAlpha: 1 });
+        return;
+      }
+      if (faqOpen) {
+        gsap.set(panel, { display: "block" });
+        gsap.fromTo(panel, { height: 0 }, { height: "auto", duration: 0.5, ease: "power3.out" });
+        gsap.fromTo(
+          items,
+          { x: -28, autoAlpha: 0 },
+          { x: 0, autoAlpha: 1, duration: 0.45, ease: "power3.out", stagger: 0.06, delay: 0.08 },
+        );
+      } else {
+        gsap.to(items, { x: 28, autoAlpha: 0, duration: 0.22, ease: "power2.in", stagger: { each: 0.035, from: "end" } });
+        gsap.to(panel, {
+          height: 0,
+          duration: 0.4,
+          delay: 0.14,
+          ease: "power3.in",
+          onComplete: () => gsap.set(panel, { display: "none" }),
+        });
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [faqOpen]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
