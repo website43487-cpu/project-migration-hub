@@ -1,12 +1,12 @@
 import { AnimatedNumber } from "@/components/AnimatedNumber";
 import { Link, useRouter } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavTone } from "./use-nav-tone";
 import { SocialLinks } from "./Social";
 import { useCart } from "@/lib/cart";
 import eyeMark from "@/assets/objekthaus-logo.svg.asset.json";
 import { WordmarkGlyph } from "./WordmarkGlyph";
-import { useFaq } from "@/lib/motion";
+import { loadGsap, prefersReducedMotion, useFaq } from "@/lib/motion";
 import { useMediaUrl } from "@/lib/use-media-url";
 
 const items: { no: string; label: string; to?: string; hash?: string; faq?: boolean }[] = [
@@ -35,6 +35,47 @@ export function Wordmark({ className = "" }: { className?: string }) {
   return <WordmarkGlyph className={`block ${className}`} />;
 }
 
+/** One FAQ answer; slides open/closed with GSAP. */
+function FaqAnswer({ open, text }: { open: boolean; text: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let cancelled = false;
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return;
+      gsap.killTweensOf(el);
+      if (prefersReducedMotion()) {
+        gsap.set(el, { display: open ? "block" : "none", height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
+        return;
+      }
+      if (open) {
+        gsap.set(el, { display: "block" });
+        gsap.fromTo(el, { height: 0, autoAlpha: 0, x: -12 }, { height: "auto", autoAlpha: 1, x: 0, duration: 0.35, ease: "power3.out" });
+      } else {
+        gsap.to(el, {
+          height: 0,
+          autoAlpha: 0,
+          x: 12,
+          duration: 0.25,
+          ease: "power2.in",
+          onComplete: () => gsap.set(el, { display: "none" }),
+        });
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="overflow-hidden" style={{ display: "none", height: 0, opacity: 0 }}>
+      <p className="pb-4 text-sm leading-relaxed opacity-75">{text}</p>
+    </div>
+  );
+}
+
 export function SiteNav() {
   const tone = useNavTone();
   const [open, setOpen] = useState(false);
@@ -43,6 +84,45 @@ export function SiteNav() {
   const faq = useFaq();
   const [faqOpen, setFaqOpen] = useState(false);
   const [openQ, setOpenQ] = useState<number | null>(null);
+  const faqPanelRef = useRef<HTMLDivElement>(null);
+
+  // Slides the question list in on open and out on close (GSAP, browser-only).
+  useEffect(() => {
+    const panel = faqPanelRef.current;
+    if (!panel) return;
+    let cancelled = false;
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return;
+      const items = panel.querySelectorAll("[data-faq-item]");
+      gsap.killTweensOf([panel, ...items]);
+      if (prefersReducedMotion()) {
+        gsap.set(panel, { display: faqOpen ? "block" : "none", height: faqOpen ? "auto" : 0 });
+        gsap.set(items, { x: 0, autoAlpha: 1 });
+        return;
+      }
+      if (faqOpen) {
+        gsap.set(panel, { display: "block" });
+        gsap.fromTo(panel, { height: 0 }, { height: "auto", duration: 0.5, ease: "power3.out" });
+        gsap.fromTo(
+          items,
+          { x: -28, autoAlpha: 0 },
+          { x: 0, autoAlpha: 1, duration: 0.45, ease: "power3.out", stagger: 0.06, delay: 0.08 },
+        );
+      } else {
+        gsap.to(items, { x: 28, autoAlpha: 0, duration: 0.22, ease: "power2.in", stagger: { each: 0.035, from: "end" } });
+        gsap.to(panel, {
+          height: 0,
+          duration: 0.4,
+          delay: 0.14,
+          ease: "power3.in",
+          onComplete: () => gsap.set(panel, { display: "none" }),
+        });
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [faqOpen]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -173,19 +253,19 @@ export function SiteNav() {
                       <span className="font-display text-2xl font-light sm:text-3xl">{item.label}</span>
                       <span className={`ml-auto self-center transition-transform duration-500 ${faqOpen ? "rotate-45" : ""}`}>+</span>
                     </button>
-                    {faqOpen && (
+                    <div ref={faqPanelRef} className="overflow-hidden" style={{ display: "none", height: 0 }}>
                       <ul className="mb-4 ml-12 border-t border-dashed border-current/30">
                         {faq.map((f, qi) => (
-                          <li key={qi} className="border-b border-dashed border-current/30">
+                          <li key={qi} data-faq-item className="border-b border-dashed border-current/30">
                             <button type="button" aria-expanded={openQ === qi} onClick={() => setOpenQ(openQ === qi ? null : qi)} className="flex w-full justify-between gap-4 py-3 text-left font-mono text-xs tracking-wider uppercase">
                               <span>{f.q}</span>
                               <span className={`transition-transform duration-300 ${openQ === qi ? "rotate-180" : ""}`}>⌄</span>
                             </button>
-                            {openQ === qi && <p className="pb-4 text-sm leading-relaxed opacity-75">{f.a}</p>}
+                            <FaqAnswer open={openQ === qi} text={f.a} />
                           </li>
                         ))}
                       </ul>
-                    )}
+                    </div>
                   </div>
                 ) : item.hash ? (
                   <button
