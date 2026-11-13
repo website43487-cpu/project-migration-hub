@@ -35,6 +35,47 @@ export function Wordmark({ className = "" }: { className?: string }) {
   return <WordmarkGlyph className={`block ${className}`} />;
 }
 
+/** One FAQ answer; slides open/closed with GSAP. */
+function FaqAnswer({ open, text }: { open: boolean; text: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let cancelled = false;
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return;
+      gsap.killTweensOf(el);
+      if (prefersReducedMotion()) {
+        gsap.set(el, { display: open ? "block" : "none", height: open ? "auto" : 0, autoAlpha: open ? 1 : 0 });
+        return;
+      }
+      if (open) {
+        gsap.set(el, { display: "block" });
+        gsap.fromTo(el, { height: 0, autoAlpha: 0, x: -12 }, { height: "auto", autoAlpha: 1, x: 0, duration: 0.35, ease: "power3.out" });
+      } else {
+        gsap.to(el, {
+          height: 0,
+          autoAlpha: 0,
+          x: 12,
+          duration: 0.25,
+          ease: "power2.in",
+          onComplete: () => gsap.set(el, { display: "none" }),
+        });
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="overflow-hidden" style={{ display: "none", height: 0, opacity: 0 }}>
+      <p className="pb-4 text-sm leading-relaxed opacity-75">{text}</p>
+    </div>
+  );
+}
+
 export function SiteNav() {
   const tone = useNavTone();
   const [open, setOpen] = useState(false);
