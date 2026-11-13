@@ -17,7 +17,9 @@ export function MotionEnhancer({ selector = "main > section" }: { selector?: str
       const ctx = gsap.context(() => {
         gsap.utils.toArray<HTMLElement>(selector).slice(1).forEach((el) => {
           if (el.hasAttribute("data-plate")) return;
-          const kids = el.querySelectorAll(":scope > div, :scope > h2, :scope > p");
+          // Reveal blocks animate themselves; skip them so the two systems never fight.
+          if (el.querySelector(":scope > .reveal")) return;
+          const kids = el.querySelectorAll(":scope > div:not(.reveal), :scope > h2, :scope > p");
           gsap.from(kids.length ? kids : el, {
             autoAlpha: 0, y: 40, duration: 0.45, ease: "power2.out", stagger: 0.04,
             scrollTrigger: { trigger: el, start: "top 80%", once: true },
@@ -54,7 +56,13 @@ export function MotionEnhancer({ selector = "main > section" }: { selector?: str
         b.addEventListener("pointerdown", tap);
       });
       ScrollTrigger.refresh();
+      // Pages that load content after navigation change height; keep trigger positions current.
+      let raf = 0;
+      const mo = new MutationObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => ScrollTrigger.refresh()); });
+      const main = document.querySelector("main");
+      if (main) mo.observe(main, { childList: true, subtree: true });
       cleanup = () => {
+        mo.disconnect(); cancelAnimationFrame(raf);
         ctx.revert();
         btns.forEach((b) => { b.removeEventListener("pointerenter", on); b.removeEventListener("pointerleave", off); b.removeEventListener("pointerdown", tap); });
       };
