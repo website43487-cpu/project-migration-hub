@@ -212,19 +212,19 @@ export function SiteNav() {
                       <span className="font-display text-2xl font-light sm:text-3xl">{item.label}</span>
                       <span className={`ml-auto self-center transition-transform duration-500 ${faqOpen ? "rotate-45" : ""}`}>+</span>
                     </button>
-                    {faqOpen && (
+                    <div ref={faqPanelRef} className="overflow-hidden" style={{ display: "none", height: 0 }}>
                       <ul className="mb-4 ml-12 border-t border-dashed border-current/30">
                         {faq.map((f, qi) => (
-                          <li key={qi} className="border-b border-dashed border-current/30">
+                          <li key={qi} data-faq-item className="border-b border-dashed border-current/30">
                             <button type="button" aria-expanded={openQ === qi} onClick={() => setOpenQ(openQ === qi ? null : qi)} className="flex w-full justify-between gap-4 py-3 text-left font-mono text-xs tracking-wider uppercase">
                               <span>{f.q}</span>
                               <span className={`transition-transform duration-300 ${openQ === qi ? "rotate-180" : ""}`}>⌄</span>
                             </button>
-                            {openQ === qi && <p className="pb-4 text-sm leading-relaxed opacity-75">{f.a}</p>}
+                            <FaqAnswer open={openQ === qi} text={f.a} />
                           </li>
                         ))}
                       </ul>
-                    )}
+                    </div>
                   </div>
                 ) : item.hash ? (
                   <button
